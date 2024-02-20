@@ -23,6 +23,7 @@ const {
   WG_POST_UP,
   WG_PRE_DOWN,
   WG_POST_DOWN,
+  WG_SERVER_ALLOWED_IPS,
 } = require('../config');
 
 module.exports = class WireGuard {
@@ -110,7 +111,13 @@ PostDown = ${WG_POST_DOWN}
 # Client: ${client.name} (${clientId})
 [Peer]
 PublicKey = ${client.publicKey}
-PresharedKey = ${client.preSharedKey}
+PresharedKey = ${client.preSharedKey}`;
+    }
+    if (client.name === "nas" || client.name === "home" ) {
+      result += `
+AllowedIPs = ${client.address}/32,${WG_SERVER_ALLOWED_IPS}`;
+    } else {
+      result += `
 AllowedIPs = ${client.address}/32`;
     }
 
