@@ -2,9 +2,7 @@ name: Build & Publish Latest
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - production
+
 
 jobs:
   deploy:
