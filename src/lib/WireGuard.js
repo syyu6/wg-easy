@@ -112,15 +112,16 @@ PostDown = ${WG_POST_DOWN}
 [Peer]
 PublicKey = ${client.publicKey}
 PresharedKey = ${client.preSharedKey}`;
-    }
-    if (client.name === "nas" || client.name === "home" ) {
+
+    if (client.name === "nas") {
       result += `
 AllowedIPs = ${client.address}/32,${WG_SERVER_ALLOWED_IPS}`;
     } else {
       result += `
 AllowedIPs = ${client.address}/32`;
     }
-
+    }
+    
     debug('Config saving...');
     await fs.writeFile(path.join(WG_PATH, 'wg0.json'), JSON.stringify(config, false, 2), {
       mode: 0o660,
