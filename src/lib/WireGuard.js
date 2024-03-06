@@ -103,24 +103,24 @@ PreDown = ${WG_PRE_DOWN}
 PostDown = ${WG_POST_DOWN}
 `;
 
-    for (const [clientId, client] of Object.entries(config.clients)) {
-      if (!client.enabled) continue;
+for (const [clientId, client] of Object.entries(config.clients)) {
+  if (!client.enabled) continue;
 
-      result += `
+  result += `
 
 # Client: ${client.name} (${clientId})
 [Peer]
 PublicKey = ${client.publicKey}
 PresharedKey = ${client.preSharedKey}`;
 
-    if (client.name.toUpperCase().includes("NAS") || client.name.toUpperCase().includes("LAN-")) {
-      result += `
+if (client.name.toUpperCase().includes("NAS") || client.name.toUpperCase().includes("LAN-")) {
+  result += `
 AllowedIPs = ${client.address}/32,${WG_SERVER_ALLOWED_IPS}`;
-    } else {
-      result += `
+} else {
+  result += `
 AllowedIPs = ${client.address}/32`;
-    }
-    }
+}
+}
     
     debug('Config saving...');
     await fs.writeFile(path.join(WG_PATH, 'wg0.json'), JSON.stringify(config, false, 2), {
@@ -212,8 +212,8 @@ ${WG_MTU ? `MTU = ${WG_MTU}\n` : ''}\
 
 [Peer]
 PublicKey = ${config.server.publicKey}
-PresharedKey = ${client.preSharedKey}
-AllowedIPs = ${WG_ALLOWED_IPS}
+${client.preSharedKey ? `PresharedKey = ${client.preSharedKey}\n` : ''
+}AllowedIPs = ${WG_ALLOWED_IPS}
 PersistentKeepalive = ${WG_PERSISTENT_KEEPALIVE}
 Endpoint = ${WG_HOST}:${WG_PORT}`;
   }
@@ -324,6 +324,11 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     client.updatedAt = new Date();
 
     await this.saveConfig();
+  }
+
+  // Shutdown wireguard
+  async Shutdown() {
+    await Util.exec('wg-quick down wg0').catch(() => { });
   }
 
 };

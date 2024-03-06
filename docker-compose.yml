@@ -5,6 +5,12 @@ volumes:
 services:
   wg-easy:
     environment:
+      # Change Language:
+      # (Supports: en, ru, tr, no, pl, fr, de, ca, es)
+      - LANG=de
+      # ⚠️ Required:
+      # Change this to your host's public address
+      - WG_HOST=raspberrypi.local
 
       # Optional:
       - PASSWORD=foobar123
@@ -19,6 +25,7 @@ services:
       # - WG_POST_UP=echo "Post Up" > /etc/wireguard/post-up.txt
       # - WG_PRE_DOWN=echo "Pre Down" > /etc/wireguard/pre-down.txt
       # - WG_POST_DOWN=echo "Post Down" > /etc/wireguard/post-down.txt
+      # - UI_TRAFFIC_STATS=true 
 
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy-1
