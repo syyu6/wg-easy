@@ -113,7 +113,7 @@ PostDown = ${WG_POST_DOWN}
 PublicKey = ${client.publicKey}
 PresharedKey = ${client.preSharedKey}`;
 
-    if (client.name === "nas") {
+    if (client.name.toUpperCase().includes("NAS") || client.name.toUpperCase().includes("LAN-")) {
       result += `
 AllowedIPs = ${client.address}/32,${WG_SERVER_ALLOWED_IPS}`;
     } else {
