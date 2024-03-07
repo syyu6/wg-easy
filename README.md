@@ -12,6 +12,57 @@ You have found the easiest way to install & manage WireGuard on any Linux host!
   <img src="./assets/screenshot.png" width="802" />
 </p>
 
+## mod-2023-03-07
+
+ - 新增 WG_SERVER_ALLOWED_IPS, 定义允许路由转发的网段
+  ```
+  WG_SERVER_ALLOWED_IPS = 192.168.2.0/24
+  ```
+
+### 使用场景
+
+公网vps部署的wg-endpoint，通过wg接入，可直连本地NAS同网段的家庭网络。
+
+本地NAS-wg配置增加路由规则
+```
+PostUp = iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j SNAT --to-source 192.168.2.2(NAS-IP)
+PostDown = iptables -t nat -D POSTROUTING -s 10.8.0.0/24 -j SNAT --to-source 192.168.2.2(NAS-IP)
+```
+
+此时需要vps上设置允许 AllowedIPs
+```
+AllowedIPs = 10.8.0.0/24, 192.168.2.0/24
+```
+
+并且vps和nas上都要开启IP转发
+```
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+
+### 示例: docker-run启动
+
+```
+docker run -d \
+  --name=wg-easy \
+  -e WG_HOST=xxxxxxx \
+  -e PASSWORD=EWQ!@# \
+  -e WG_PERSISTENT_KEEPALIVE=25 \
+  -e LANG=chs \
+  -e WG_DEFAULT_DNS=8.8.8.8 \
+  -e WG_ALLOWED_IPS=10.8.0.0/24,192.168.2.0/24(NAS网段) \
+  -e WG_SERVER_ALLOWED_IPS=192.168.2.0/24(NAS网段) \
+  -v /root/wg-easy:/etc/wireguard \
+  -p 51820:51820/udp \
+  -p 51821:51821/tcp \
+  --cap-add=NET_ADMIN \
+  --cap-add=SYS_MODULE \
+  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+  --sysctl="net.ipv4.ip_forward=1" \
+  --restart unless-stopped \
+  ghcr.io/syyu6/wg-easy
+  
+```
+
 ## Features
 
 * All-in-one: WireGuard + Web UI.
