@@ -24,6 +24,7 @@ const {
   WG_PRE_DOWN,
   WG_POST_DOWN,
   WG_SERVER_ALLOWED_IPS,
+  WG_SERVER_ROUTE_IP,
 } = require('../config');
 
 module.exports = class WireGuard {
@@ -204,7 +205,22 @@ AllowedIPs = ${client.address}/32`;
     const config = await this.getConfig();
     const client = await this.getClient({ clientId });
 
-    return `[Interface]
+    if (client.name.toUpperCase().includes("NAS") || client.name.toUpperCase().includes("LAN-")) {
+      return `[Interface]
+PrivateKey = ${client.privateKey}
+Address = ${client.address}/24
+${WG_DEFAULT_DNS ? `DNS = ${WG_DEFAULT_DNS}\n` : ''}\
+${WG_MTU ? `MTU = ${WG_MTU}\n` : ''}\
+${WG_SERVER_ROUTE_IP ? `PostUp = iptables -t nat -A POSTROUTING -s ${client.address}/24 -j SNAT --to-source ${WG_SERVER_ROUTE_IP}\nPostDown = iptables -t nat -D POSTROUTING -s ${client.address}/24 -j SNAT --to-source ${WG_SERVER_ROUTE_IP}` : ''}\
+
+[Peer]
+PublicKey = ${config.server.publicKey}
+${client.preSharedKey ? `PresharedKey = ${client.preSharedKey}\n` : ''
+}AllowedIPs = ${WG_ALLOWED_IPS}
+PersistentKeepalive = ${WG_PERSISTENT_KEEPALIVE}
+Endpoint = ${WG_HOST}:${WG_PORT}`;
+    } else {
+      return `[Interface]
 PrivateKey = ${client.privateKey}
 Address = ${client.address}/24
 ${WG_DEFAULT_DNS ? `DNS = ${WG_DEFAULT_DNS}\n` : ''}\
@@ -216,6 +232,8 @@ ${client.preSharedKey ? `PresharedKey = ${client.preSharedKey}\n` : ''
 }AllowedIPs = ${WG_ALLOWED_IPS}
 PersistentKeepalive = ${WG_PERSISTENT_KEEPALIVE}
 Endpoint = ${WG_HOST}:${WG_PORT}`;
+    }
+    
   }
 
   async getClientQRCodeSVG({ clientId }) {

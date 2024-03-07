@@ -18,6 +18,7 @@ module.exports.WG_DEFAULT_DNS = typeof process.env.WG_DEFAULT_DNS === 'string'
   : '1.1.1.1';
 module.exports.WG_ALLOWED_IPS = process.env.WG_ALLOWED_IPS || '0.0.0.0/0, ::/0';
 module.exports.WG_SERVER_ALLOWED_IPS = process.env.WG_SERVER_ALLOWED_IPS || '192.168.2.0/24';
+module.exports.WG_SERVER_ROUTE_IP = process.env.WG_SERVER_ROUTE_IP || '';
 
 module.exports.WG_PRE_UP = process.env.WG_PRE_UP || '';
 module.exports.WG_POST_UP = process.env.WG_POST_UP || `
