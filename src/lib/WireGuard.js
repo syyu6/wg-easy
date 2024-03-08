@@ -211,7 +211,7 @@ PrivateKey = ${client.privateKey}
 Address = ${client.address}/24
 ${WG_DEFAULT_DNS ? `DNS = ${WG_DEFAULT_DNS}\n` : ''}\
 ${WG_MTU ? `MTU = ${WG_MTU}\n` : ''}\
-${WG_SERVER_ROUTE_IP ? `PostUp = iptables -t nat -A POSTROUTING -s ${client.address}/24 -j SNAT --to-source ${WG_SERVER_ROUTE_IP}\nPostDown = iptables -t nat -D POSTROUTING -s ${client.address}/24 -j SNAT --to-source ${WG_SERVER_ROUTE_IP}` : ''}\
+${WG_SERVER_ROUTE_IP ? `PostUp = iptables -t nat -A POSTROUTING -s ${client.address}/24 -j SNAT --to-source ${WG_SERVER_ROUTE_IP}\nPostDown = iptables -t nat -D POSTROUTING -s ${client.address}/24 -j SNAT --to-source ${WG_SERVER_ROUTE_IP}\n` : ''}\
 
 [Peer]
 PublicKey = ${config.server.publicKey}
