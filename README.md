@@ -56,9 +56,10 @@ docker run -d \
   -e WG_PERSISTENT_KEEPALIVE=25 \
   -e LANG=chs \
   -e WG_DEFAULT_DNS=8.8.8.8 \
-  -e WG_ALLOWED_IPS=10.8.0.0/24,192.168.2.0/24 # NAS网段 \
-  -e WG_SERVER_ALLOWED_IPS=192.168.2.0/24 # NAS网段 \
-  -e WG_SERVER_ROUTE_IP=192.168.2.2 # NAS-IP \
+  -e WG_DEFAULT_ADDRESS=10.8.0.x \
+  -e WG_ALLOWED_IPS=10.8.0.0/24,192.168.2.0/24 \ # NAS网段
+  -e WG_SERVER_ALLOWED_IPS=192.168.2.0/24 \ # NAS网段
+  -e WG_SERVER_ROUTE_IP=192.168.2.2 \ # NAS-IP
   -v /root/wg-easy:/etc/wireguard \
   -p 51820:51820/udp \
   -p 51821:51821/tcp \
