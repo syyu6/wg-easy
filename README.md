@@ -12,7 +12,13 @@ You have found the easiest way to install & manage WireGuard on any Linux host!
   <img src="./assets/screenshot.png" width="802" />
 </p>
 
-## mod-2023-03-07
+## 更新日志
+
+### 2024-03-27
+
+ - 合并上游分支代码
+
+### 2024-03-07
 
  - 新增 `WG_SERVER_ALLOWED_IPS`, 定义允许路由转发的网段
  - 新增 `WG_SERVER_ROUTE_IP`, 定义转发指向的路由IP
