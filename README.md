@@ -55,7 +55,12 @@ sudo sysctl -w net.ipv4.ip_forward=1
 ### 示例: docker-run启动
 
 ```
+docker pull ghcr.io/syyu6/wg-easy
+```
+
+```
 docker pull ghcr.nju.edu.cn/syyu6/wg-easy
+docker pull ghcr.m.daocloud.io/syyu6/wg-easy
 ```
 
 ```
@@ -78,7 +83,7 @@ docker run -d \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --sysctl="net.ipv4.ip_forward=1" \
   --restart unless-stopped \
-  ghcr.nju.edu.cn/syyu6/wg-easy
+  ghcr.io/syyu6/wg-easy
   
 ```
 
