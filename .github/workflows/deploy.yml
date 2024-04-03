@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
     filters:
       - keyword: "deploy release"
-      
+
 
 jobs:
   deploy:
