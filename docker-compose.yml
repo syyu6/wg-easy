@@ -22,9 +22,9 @@ services:
       - WG_SERVER_ALLOWED_IPS=192.168.31.0/24
       - WG_PERSISTENT_KEEPALIVE=25
       # - PASSWORD=foobar123
+      # - PORT=51821
       # - WG_PORT=51820
-      # - WG_DEFAULT_ADDRESS=10.8.0.0
-      # - WG_DEFAULT_ADDRESS_RANGE=24
+      # - WG_DEFAULT_ADDRESS=10.8.0.x
       # - WG_DEFAULT_DNS=1.1.1.1
       # - WG_MTU=1420
       # - WG_ALLOWED_IPS=192.168.15.0/24, 10.0.1.0/24
@@ -34,7 +34,7 @@ services:
       # - WG_PRE_DOWN=echo "Pre Down" > /etc/wireguard/pre-down.txt
       # - WG_POST_DOWN=echo "Post Down" > /etc/wireguard/post-down.txt
       # - UI_TRAFFIC_STATS=true
-      # - UI_CHART_TYPE=0 (0 # Charts disabled, 1 # Line chart, 2 # Area chart, 3 # Bar chart)
+      # - UI_CHART_TYPE=0 # (0 Charts disabled, 1 # Line chart, 2 # Area chart, 3 # Bar chart)
 
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy-1

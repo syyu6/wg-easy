@@ -1,5 +1,5 @@
 {
-  "release": "12.1",
+  "release": "13.1",
   "name": "wg-easy",
   "version": "1.0.1",
   "description": "The easiest way to run WireGuard VPN + Web-based Admin UI.",
@@ -16,7 +16,6 @@
     "bcryptjs": "^2.4.3",
     "debug": "^4.3.4",
     "express-session": "^1.18.0",
-    "ip": "^2.0.1",
     "h3": "^1.11.1",
     "qrcode": "^1.5.3",
     "uuid": "^9.0.1"
@@ -31,6 +30,6 @@
     ]
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   }
 }
